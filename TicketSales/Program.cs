@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TicketSales.XmlSaver;
 using TicketShop.DailySales;
 using TicketShop.DB;
 
@@ -36,6 +37,8 @@ namespace TicketSales
                 DailySaleGenerator gen = new DailySaleGenerator(sellers, sectors);
                 var list = gen.GenerateSales(10, 6, 10);
                 list.ToConsole("LIST");
+
+                var xdoc = XmlGenerator.GenerateXML(list);
             }
         }
     }
