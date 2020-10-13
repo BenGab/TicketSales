@@ -52,6 +52,18 @@ namespace TicketSales
                                 };
 
                 perseller.ToConsole("PER SELLER");
+
+                var perSector = from sectornode in xdoc.Descendants("sector")
+                                group sectornode by sectornode.Attribute("code").Value into grp
+                                orderby grp.Key
+                                select new
+                                {
+                                    Sector = grp.Key,
+                                    TotalSold = grp.Sum(x => (int)x.Element("sold"))
+                                };
+
+                perSector.ToConsole("PER SECTOR");
+
             }
         }
     }
