@@ -39,6 +39,19 @@ namespace TicketSales
                 list.ToConsole("LIST");
 
                 var xdoc = XmlGenerator.GenerateXML(list);
+
+                Console.WriteLine(xdoc);
+
+                var perseller = from sellerNode in xdoc.Descendants("seller")
+                                group sellerNode by sellerNode.Attribute("name").Value into grp
+                                orderby grp.Key
+                                select new
+                                {
+                                    Seller = grp.Key,
+                                    TotalSold = grp.Sum(x => (int)x.Element("sold"))
+                                };
+
+                perseller.ToConsole("PER SELLER");
             }
         }
     }
