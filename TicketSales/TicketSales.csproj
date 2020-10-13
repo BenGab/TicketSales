@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TicketShop.DailySales\TicketShop.DailySales.csproj" />
     <ProjectReference Include="..\TicketShop.DB\TicketShop.DB.csproj" />
   </ItemGroup>
 

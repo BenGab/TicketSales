@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TicketShop.DailySales;
 using TicketShop.DB;
 
 namespace TicketSales
@@ -31,6 +32,10 @@ namespace TicketSales
                 sectors.ToConsole("SECTORS");
                 string[] sellers = ctx.Sellers.Select(x => x.Name).ToArray();
                 sellers.ToConsole("SELLERS");
+
+                DailySaleGenerator gen = new DailySaleGenerator(sellers, sectors);
+                var list = gen.GenerateSales(10, 6, 10);
+                list.ToConsole("LIST");
             }
         }
     }
