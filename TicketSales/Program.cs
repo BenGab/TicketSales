@@ -35,7 +35,7 @@ namespace TicketSales
                 sellers.ToConsole("SELLERS");
 
                 DailySaleGenerator gen = new DailySaleGenerator(sellers, sectors);
-                var list = gen.GenerateSales(10, 6, 10);
+                var list = gen.GenerateSales(10, 600, 10);
                 list.ToConsole("LIST");
 
                 var xdoc = XmlGenerator.GenerateXML(list);
@@ -64,6 +64,20 @@ namespace TicketSales
 
                 perSector.ToConsole("PER SECTOR");
 
+                var remainingSeats = ctx.Sectors.ToList().Select(sector => new
+                {
+                    Total = sector.Capacity,
+                    Remaining = sector.Capacity - perSector.SingleOrDefault(stat => stat.Sector == sector.Code)?.TotalSold ?? 0
+                });
+
+                remainingSeats.ToConsole("REMAING SEATS");
+
+                var errors = from seat in remainingSeats
+                             where seat.Remaining < 0
+                             select seat;
+
+                Console.WriteLine($"errors : {errors.Count()}");
+                errors.ToConsole("ERRO SALES");
             }
         }
     }
